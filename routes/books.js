@@ -47,19 +47,13 @@ router.get('/:id', asyncHandler(async(req, res, next) => {
   if(book) {
     res.render("update-book", { book, title: "Update Book" });
   } else {
-    res.sendStatus(404);
+    const err = new Error();
+    res.status(404);
+    err.header = "Book Not Found"
+    err.message = "Sorry! We couldn't find the book you were looking for!";
+    res.render('page-not-found', { err });
   }
 }));
-
-// //POST Update Book
-// router.post('/:id', asyncHandler(async (req, res) => {
-//   const book = await Book.findByPk(req.params.id);
-//   if(book) {
-//     console.log(req.body);
-//     await book.update(req.body);
-//     res.redirect('/');
-//   }
-// }));
 
 //POST Update Book
 router.post('/:id', asyncHandler(async (req, res) => {

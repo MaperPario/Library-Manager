@@ -37,6 +37,7 @@ app.use('/books', books);
 app.use(function(req, res, next) {
   const err = new Error();
   res.status(404);
+  err.header = "Page Not Found"
   err.message = "Sorry! We couldn't find the page you were looking for!";
   res.render('page-not-found', { err });
   next(err);
