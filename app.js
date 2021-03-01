@@ -36,10 +36,9 @@ app.use('/books', books);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   const err = new Error();
-  res.status(404);
+  err.status = 404;
   err.header = "Page Not Found"
   err.message = "Sorry! We couldn't find the page you were looking for!";
-  res.render('page-not-found', { err });
   next(err);
 });
 
@@ -47,7 +46,7 @@ app.use(function(req, res, next) {
 app.use(function (err, req, res, next) {
   if (err.status === 404) {
     res.status(404)
-    res.render('page-not-found');
+    res.render('page-not-found', { err });
   } else {
   console.error(err.stack)
   res.status(500);
